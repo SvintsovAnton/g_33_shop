@@ -1,14 +1,21 @@
 package de.ait_tr.g_33_shop.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name="product")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
-    private String title;
-    private BigDecimal price;
-    private boolean active;
+    @Column(name="title") private String title;
+    @Column(name="price") private BigDecimal price;
+    @Column(name = "active") private boolean active;
 
     public void setId(Long id) {
         this.id = id;
