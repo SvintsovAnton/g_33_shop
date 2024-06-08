@@ -32,7 +32,7 @@ public class ProductController {
 
 //READ GET ->localhost:8080/products?id=3
 
-    @GetMapping("/product")
+    @GetMapping
     public List<Product> getProduct(@RequestParam(required = false) Long id) {
         // Обращаемся к сервису и запрашиваем продукт с ИД, который пришел на вход
         if (id == null) {
