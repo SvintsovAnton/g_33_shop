@@ -13,7 +13,7 @@
             <column name="is_active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            
+
             <column name="name" type="varchar(64)">
                 <constraints nullable="false"/>
             </column>

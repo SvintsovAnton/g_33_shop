@@ -1,13 +1,24 @@
 package de.ait_tr.g_33_shop.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    boolean active;
-    String name;
-    Cart cart;
+    @Column(name="is_active")
+    private boolean active;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name="basket_id")
+    private int cartId;
+
 
     public Long getId() {
         return id;
@@ -33,12 +44,12 @@ public class Customer {
         this.name = name;
     }
 
-    public Cart getCart() {
-        return cart;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     @Override
@@ -46,16 +57,16 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, active, name, cart);
+        return Objects.hash(id, active, name);
     }
 
     @Override
     public String toString() {
-        return String.format("Customer: id - %d, active - %s, name - %s, cart -%s",id,active?"yes":"no",name, cart.toString());
+        return String.format("Customer: id - %d, active - %s, name - %s",id,active?"yes":"no",name);
     }
 }

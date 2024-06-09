@@ -17,6 +17,7 @@ public class Product {
     @Column(name="price") private BigDecimal price;
     @Column(name = "active") private boolean active;
 
+
     public void setId(Long id) {
         this.id = id;
     }
