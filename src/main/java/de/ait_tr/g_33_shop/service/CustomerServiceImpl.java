@@ -31,7 +31,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getById(Long id) {
-        return repository.findById(id).orElse(null);
+        Customer customer = repository.findById(id).orElse(null);
+        if (customer!=null&& customer.isActive()){
+            return customer;
+        } return null;
     }
 
     @Override

@@ -16,8 +16,6 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
-    @Column(name="basket_id")
-    private int cartId;
 
 
     public Long getId() {
@@ -44,13 +42,6 @@ public class Customer {
         this.name = name;
     }
 
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
 
     @Override
     public boolean equals(Object o) {
