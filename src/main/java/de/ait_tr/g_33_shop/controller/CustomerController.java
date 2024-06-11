@@ -2,6 +2,7 @@ package de.ait_tr.g_33_shop.controller;
 
 import de.ait_tr.g_33_shop.domain.entity.Customer;
 import de.ait_tr.g_33_shop.service.interfaces.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -19,10 +20,16 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer save(@RequestBody Customer customer) {
+    public Customer save(@RequestBody
+                             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Instance of a Product")
+                             Customer customer) {
         return customerService.save(customer);
     }
 
+    @Operation(
+            summary = "Get one or all products",
+            description = "Getting one or all products that exist in the database"
+    )
     @GetMapping
     public List<Customer> getCustomer(@RequestParam(required = false) Long id) {
         if (id == null) {
