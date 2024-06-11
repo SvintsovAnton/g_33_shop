@@ -1,7 +1,8 @@
 package de.ait_tr.g_33_shop.controller;
 
-import de.ait_tr.g_33_shop.domain.entity.Product;
+import de.ait_tr.g_33_shop.domain.dto.ProductDto;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@Tag(name = "Product controller", description = "Controller for various operations with Products")
 public class ProductController {
 
     private final ProductService service;
@@ -24,7 +26,7 @@ public class ProductController {
     //Create: POST ->localhost:8080/product
 
 @PostMapping
-    public Product save(@RequestBody Product product){
+    public ProductDto save(@RequestBody ProductDto product){
     //обращаемся к сервесу для сохранения продукта
     return service.save(product);
 }
@@ -33,12 +35,12 @@ public class ProductController {
 //READ GET ->localhost:8080/products?id=3
 
     @GetMapping
-    public List<Product> getProduct(@RequestParam(required = false) Long id) {
+    public List<ProductDto> getProduct(@RequestParam(required = false) Long id) {
         // Обращаемся к сервису и запрашиваем продукт с ИД, который пришел на вход
         if (id == null) {
             return service.getAllActiveProducts();
         } else {
-            Product product = service.getById(id);
+            ProductDto product = service.getById(id);
             return product==null?null:List.of(product);
         }
     }
@@ -54,7 +56,7 @@ public class ProductController {
 
      //UPDATE
     @PutMapping
-    public Product update(@RequestBody Product product){
+    public ProductDto update(@RequestBody ProductDto product){
         //обращаемся к серису для обновления продукта в БД
         return service.update(product);
     }
