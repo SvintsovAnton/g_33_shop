@@ -1,6 +1,6 @@
 package de.ait_tr.g_33_shop.controller;
 
-import de.ait_tr.g_33_shop.domain.entity.Customer;
+import de.ait_tr.g_33_shop.domain.dto.CustomerDto;
 import de.ait_tr.g_33_shop.service.interfaces.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer save(@RequestBody
+    public CustomerDto save(@RequestBody
                              @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Instance of a Product")
-                             Customer customer) {
+                                CustomerDto customer) {
         return customerService.save(customer);
     }
 
@@ -31,18 +31,18 @@ public class CustomerController {
             description = "Getting one or all products that exist in the database"
     )
     @GetMapping
-    public List<Customer> getCustomer(@RequestParam(required = false) Long id) {
+    public List<CustomerDto> getCustomer(@RequestParam(required = false) Long id) {
         if (id == null) {
             return customerService.getAllActiveCustomers();
         } else {
-            Customer customer = customerService.getById(id);
+            CustomerDto customer = customerService.getById(id);
             return customer == null ? null : List.of(customer);
         }
     }
 
 
     @PutMapping
-    public Customer update(@RequestParam Long id) {
+    public CustomerDto update(@RequestParam Long id) {
         return customerService.update(id);
     }
 
@@ -56,7 +56,7 @@ public class CustomerController {
     }
 
     @PutMapping("/restore")
-    public Customer restore(@RequestParam Long id) {
+    public CustomerDto restore(@RequestParam Long id) {
         return customerService.restore(id);
     }
 

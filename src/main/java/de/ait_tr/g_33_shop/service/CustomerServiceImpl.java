@@ -1,8 +1,10 @@
 package de.ait_tr.g_33_shop.service;
 
+import de.ait_tr.g_33_shop.domain.dto.CustomerDto;
 import de.ait_tr.g_33_shop.domain.entity.Customer;
 import de.ait_tr.g_33_shop.repository.CustomerRepository;
 import de.ait_tr.g_33_shop.service.interfaces.CustomerService;
+import de.ait_tr.g_33_shop.service.mapping.CustomerMappingService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,33 +14,36 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository repository;
+    private CustomerMappingService mappingService;
 
-    public CustomerServiceImpl(CustomerRepository repository) {
+    public CustomerServiceImpl(CustomerRepository repository, CustomerMappingService mappingService) {
         this.repository = repository;
+        this.mappingService = mappingService;
     }
 
     @Override
-    public Customer save(Customer customer) {
-        customer.setId(null);
-        customer.setActive(true);
-        return repository.save(customer);
+    public CustomerDto save(CustomerDto customer) {
+       Customer entity = mappingService.mapDtoInEntity(customer);
+        repository.save(entity);
+        return mappingService.mapEntityToDto(entity);
+
     }
 
     @Override
-    public List<Customer> getAllActiveCustomers() {
-        return repository.findAll().stream().filter(Customer::isActive).toList();
+    public List<CustomerDto> getAllActiveCustomers() {
+        return repository.findAll().stream().filter(Customer::isActive).map(mappingService::mapEntityToDto).toList();
     }
 
     @Override
-    public Customer getById(Long id) {
+    public CustomerDto getById(Long id) {
         Customer customer = repository.findById(id).orElse(null);
         if (customer!=null&& customer.isActive()){
-            return customer;
+            return mappingService.mapEntityToDto(customer);
         } return null;
     }
 
     @Override
-    public Customer update(Long id) {
+    public CustomerDto update(Long id) {
         return null;
     }
 
@@ -53,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer restore(Long id) {
+    public CustomerDto restore(Long id) {
         return null;
     }
 
