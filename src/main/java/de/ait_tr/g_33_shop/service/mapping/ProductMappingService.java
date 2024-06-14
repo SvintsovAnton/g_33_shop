@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Service;
 
-@Service
+
 @Mapper(componentModel = "spring")
 public interface ProductMappingService {
     @Mapping(target = "id",ignore = true)

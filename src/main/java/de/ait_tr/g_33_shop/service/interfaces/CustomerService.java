@@ -5,7 +5,8 @@ import de.ait_tr.g_33_shop.domain.dto.CustomerDto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface CustomerService {
+public interface
+CustomerService {
 
     CustomerDto save(CustomerDto customer);
     List<CustomerDto> getAllActiveCustomers();
