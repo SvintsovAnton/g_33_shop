@@ -5,6 +5,7 @@ import de.ait_tr.g_33_shop.domain.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+
 @Mapper(componentModel = "spring")
 public interface CustomerMappingService {
     @Mapping(target = "id",ignore = true)

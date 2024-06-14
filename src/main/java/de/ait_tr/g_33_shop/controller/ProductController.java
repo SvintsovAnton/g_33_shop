@@ -1,7 +1,9 @@
 package de.ait_tr.g_33_shop.controller;
 
 import de.ait_tr.g_33_shop.domain.dto.ProductDto;
+import de.ait_tr.g_33_shop.domain.entity.Product;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,17 @@ public class ProductController {
     }
 
 
-//CRUD Create (POST),Read (GET),Update (PUT) ,Delete (DELETE)
 
-    //Create: POST ->localhost:8080/product
+
+//CRUD Create (POST),Read (GET),Update (PUT) ,Delete (DELETE)
+// Create: POST ->localhost:8080/product
+//Доступ ко всем продуктам - все пользователи
+    //получить продукт по идентификатору - пользователей
+    //сохранить продукт - админ
+
+
+
+
 
 @PostMapping
     public ProductDto save(@RequestBody ProductDto product){
@@ -34,25 +44,22 @@ public class ProductController {
 
 //READ GET ->localhost:8080/products?id=3
 
-    @GetMapping
-    public List<ProductDto> getProduct(@RequestParam(required = false) Long id) {
+   @Operation(summary = "Get product by ID", description = "Getting all products that exist in the database")
+   @GetMapping
+    public ProductDto getById(@RequestParam Long id) {
         // Обращаемся к сервису и запрашиваем продукт с ИД, который пришел на вход
-        if (id == null) {
-            return service.getAllActiveProducts();
-        } else {
-            ProductDto product = service.getById(id);
-            return product==null?null:List.of(product);
+       return service.getById(id);
         }
-    }
 
 
 
 
-/*@GetMapping("/all")
-    public List<Product> getAll(){
-    //обращаемся к сервису и запрашиваем все продукты
-    return null;
-}*/
+
+@GetMapping("/all")
+@Operation(summary = "Get all products", description = "Getting all products that exist in the database")
+    public List<ProductDto> getAll(){
+    return service.getAllActiveProducts();
+}
 
      //UPDATE
     @PutMapping
