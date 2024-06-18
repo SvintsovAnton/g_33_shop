@@ -43,6 +43,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/products").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST,"/products").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/auth/login","/auth/refresh").permitAll()
+                    .requestMatchers(HttpMethod.DELETE,"/products").hasRole("ADMIN")
             ).build();
 
     }

@@ -50,7 +50,7 @@ return mappingService.mapEntityToDto(entity);
 
     @Override
     public void deleteById(Long id) {
-
+repository.deleteById(id);
     }
 
     @Override
