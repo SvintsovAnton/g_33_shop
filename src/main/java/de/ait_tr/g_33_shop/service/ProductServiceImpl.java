@@ -3,10 +3,7 @@ package de.ait_tr.g_33_shop.service;
 import de.ait_tr.g_33_shop.domain.dto.ProductDto;
 import de.ait_tr.g_33_shop.domain.entity.Product;
 import de.ait_tr.g_33_shop.exception_handling.Response;
-import de.ait_tr.g_33_shop.exception_handling.exceptions.FirstTestException;
-import de.ait_tr.g_33_shop.exception_handling.exceptions.FourTestException;
-import de.ait_tr.g_33_shop.exception_handling.exceptions.SecondTestException;
-import de.ait_tr.g_33_shop.exception_handling.exceptions.ThirdTestException;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.*;
 import de.ait_tr.g_33_shop.repository.ProductRepository;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
 import de.ait_tr.g_33_shop.service.mapping.ProductMappingService;
@@ -32,12 +29,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto save(ProductDto dto) {
 Product entity = mappingService.mapDtoToEntity(dto);
-repository.save(entity);
-try {
+       if (repository.findAll().stream().anyMatch(element->element.getTitle().equals(entity.getTitle()))){
+           throw new DataIntegrityViolationException("Product with this title exist allready");
+       }
+        try {
     repository.save(entity);
-
 }  catch (Exception e) {
-    throw new FourTestException(e.getMessage());
+    throw new InvalidDataException(e.getMessage());
 }
         return mappingService.mapEntityToDto(entity);
 }
@@ -45,8 +43,12 @@ try {
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
-        return repository.findAll()
+        List<ProductDto> productDtoList= repository.findAll()
                 .stream().filter(Product::isActive).map(mappingService::mapEntityToDto).toList();
+        if (productDtoList.isEmpty()){
+            throw new EmptyListException("List of active products is empty");
+        }
+        return productDtoList;
     }
 
     @Override
@@ -55,7 +57,7 @@ try {
         if (product != null && product.isActive()) {
             return mappingService.mapEntityToDto(product);
         }
-        throw new ThirdTestException("This is third status exception");
+        throw new ProductNotFindException("This product isn't found");
     }
 
     @Override
@@ -65,12 +67,14 @@ try {
 
     @Override
     public void deleteById(Long id) {
+        if (repository.findById(id).orElse(null)==null){
+            throw new ProductNotFindException("This product isn't found und can not be removed");
+        }
 repository.deleteById(id);
     }
 
     @Override
     public void deleteByTitle(String title) {
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.ait_tr.g_33_shop.controller;
 import de.ait_tr.g_33_shop.domain.dto.ProductDto;
 import de.ait_tr.g_33_shop.domain.entity.Product;
 import de.ait_tr.g_33_shop.exception_handling.Response;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.EmptyListException;
 import de.ait_tr.g_33_shop.exception_handling.exceptions.FirstTestException;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -101,6 +102,9 @@ public class ProductController {
         return service.getAllActiveProductsAveragePrice();
     }
 
-
+@ExceptionHandler(EmptyListException.class)
+    public Response handleEmptyListException(EmptyListException e){
+        return new Response(e.getMessage());
+}
 
 }
