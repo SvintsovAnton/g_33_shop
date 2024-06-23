@@ -2,10 +2,16 @@ package de.ait_tr.g_33_shop.service;
 
 import de.ait_tr.g_33_shop.domain.dto.ProductDto;
 import de.ait_tr.g_33_shop.domain.entity.Product;
+import de.ait_tr.g_33_shop.exception_handling.Response;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.FirstTestException;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.FourTestException;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.SecondTestException;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.ThirdTestException;
 import de.ait_tr.g_33_shop.repository.ProductRepository;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
 import de.ait_tr.g_33_shop.service.mapping.ProductMappingService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,13 +27,21 @@ public class ProductServiceImpl implements ProductService {
         this.mappingService = mappingService;
     }
 
-
+//1.
+//
     @Override
     public ProductDto save(ProductDto dto) {
 Product entity = mappingService.mapDtoToEntity(dto);
 repository.save(entity);
-return mappingService.mapEntityToDto(entity);
-    }
+try {
+    repository.save(entity);
+
+}  catch (Exception e) {
+    throw new FourTestException(e.getMessage());
+}
+        return mappingService.mapEntityToDto(entity);
+}
+
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
@@ -37,10 +51,11 @@ return mappingService.mapEntityToDto(entity);
 
     @Override
     public ProductDto getById(Long id) {
-       Product product= repository.findById(id).orElse(null);
-   if (product!=null&&product.isActive()){
-       return mappingService.mapEntityToDto(product);
-   } return null;
+        Product product = repository.findById(id).orElse(null);
+        if (product != null && product.isActive()) {
+            return mappingService.mapEntityToDto(product);
+        }
+        throw new ThirdTestException("This is third status exception");
     }
 
     @Override
@@ -77,4 +92,7 @@ repository.deleteById(id);
     public BigDecimal getAllActiveProductsAveragePrice() {
         return null;
     }
+
+
+
 }

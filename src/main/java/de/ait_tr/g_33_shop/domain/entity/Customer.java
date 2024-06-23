@@ -16,6 +16,9 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
+  @OneToOne(mappedBy = "customer")
+  private Cart cart;
+
 
 
     public Long getId() {
@@ -42,22 +45,29 @@ public class Customer {
         this.name = name;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name);
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, active, name);
+        return Objects.hash(id, active, name, cart);
     }
 
     @Override
     public String toString() {
-        return String.format("Customer: id - %d, active - %s, name - %s",id,active?"yes":"no",name);
+        return String.format("Customer: id - %d, active - %s, name - %s, cart -%s",id,active?"yes":"no",name,cart==null?"null":cart);
     }
 }

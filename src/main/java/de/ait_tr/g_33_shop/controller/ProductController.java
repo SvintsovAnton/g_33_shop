@@ -2,6 +2,8 @@ package de.ait_tr.g_33_shop.controller;
 
 import de.ait_tr.g_33_shop.domain.dto.ProductDto;
 import de.ait_tr.g_33_shop.domain.entity.Product;
+import de.ait_tr.g_33_shop.exception_handling.Response;
+import de.ait_tr.g_33_shop.exception_handling.exceptions.FirstTestException;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,6 +49,7 @@ public class ProductController {
    @Operation(summary = "Get product by ID", description = "Getting all products that exist in the database")
    @GetMapping
     public ProductDto getById(@RequestParam Long id) {
+
         // Обращаемся к сервису и запрашиваем продукт с ИД, который пришел на вход
        return service.getById(id);
         }
@@ -97,6 +100,7 @@ public class ProductController {
     public BigDecimal getAveragePrice(){
         return service.getAllActiveProductsAveragePrice();
     }
+
 
 
 }
