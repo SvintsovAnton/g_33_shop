@@ -198,7 +198,8 @@ public void negativeSavingProductWithoutAuthorization(){
        HttpEntity<ProductDto> request = new HttpEntity<>(testProduct,headers);
        ResponseEntity<ProductDto> response = template.exchange(url,HttpMethod.POST,request, ProductDto.class);
        testId = response.getBody().getId();
-       testProduct.setId(testId);
+       if (testId!=null){
+       testProduct.setId(testId);}
        assertEquals(HttpStatus.OK,response.getStatusCode());
         assertEquals(testProduct, response.getBody());
 

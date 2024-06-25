@@ -1,10 +1,11 @@
+
 spring:
   application:
     name:Shop
   datasource:
-    url: jdbc:postgresql://§{DB_HOST}:{DB_PORT}/{DB_NAME}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/g_33_shop
+    username: postgres
+    password: Amigo1997!!!
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
@@ -20,4 +21,4 @@ key:
   refresh: etOhb8orqmjBAXkEVRw7b5l1x0TRZNj9wmL8QsyDFn8=
 
 messages:
-  hello: Hello from Digital Ocean!
+  hello: Hello from local application!
