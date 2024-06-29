@@ -7,4 +7,6 @@ public interface UserService extends UserDetailsService {
 
     void register(User user);
 
+    String confirmRegistration(String confirmCode);
+
 }

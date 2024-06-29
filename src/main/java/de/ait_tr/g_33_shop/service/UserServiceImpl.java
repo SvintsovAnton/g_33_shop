@@ -3,6 +3,7 @@ package de.ait_tr.g_33_shop.service;
 import de.ait_tr.g_33_shop.domain.entity.Role;
 import de.ait_tr.g_33_shop.domain.entity.User;
 import de.ait_tr.g_33_shop.repository.UserRepository;
+import de.ait_tr.g_33_shop.service.interfaces.ConfirmationService;
 import de.ait_tr.g_33_shop.service.interfaces.EmailService;
 import de.ait_tr.g_33_shop.service.interfaces.RoleService;
 import de.ait_tr.g_33_shop.service.interfaces.UserService;
@@ -25,11 +26,14 @@ public class UserServiceImpl implements UserService {
 
     private final EmailService emailService;
 
-    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService) {
+    private final ConfirmationService confirmationService;
+
+    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService, ConfirmationService confirmationService) {
         this.repository = repository;
         this.encoder = encoder;
         this.roleService = roleService;
         this.emailService = emailService;
+        this.confirmationService = confirmationService;
     }
 
     @Override
@@ -41,15 +45,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user) {
-        //TODO др
-        user.setId(null);
-        user.setPassword(encoder.encode(user.getPassword()));
-        Role userRole = roleService.getRoleUser();
-        user.setRoles(Set.of(userRole));
-        user.setActive(false);
 
-        repository.save(user);
-        emailService.sendConfirmationEmail(user);
+            user.setId(null);
+            user.setPassword(encoder.encode(user.getPassword()));
+            Role userRole = roleService.getRoleUser();
+            user.setRoles(Set.of(userRole));
+            user.setActive(false);
+            repository.save(user);
+            emailService.sendConfirmationEmail(user);
 
+        }
+
+
+
+
+
+    @Override
+    public String confirmRegistration(String confirmCode){
+return confirmationService.confirmRegistration(confirmCode);
     }
 }
