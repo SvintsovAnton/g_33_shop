@@ -28,6 +28,12 @@ private Long id;
             inverseJoinColumns =@JoinColumn(name="role_id"))
     private Set<Role> roles;
 
+    @Column(name="email")
+    private String email;
+
+    @Column(name = "active")
+    private boolean active;
+
     public Long getId() {
         return id;
     }
@@ -65,19 +71,34 @@ private Long id;
         this.roles = roles;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, roles);
+        return Objects.hash(id, username, password, roles, email, active);
     }
-
 
     @Override
     public String toString() {

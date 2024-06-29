@@ -15,6 +15,24 @@ spring:
       hibernate:
         auto_quote_keyword: true
 
+  mail:
+    username: shop777testmail789@gmail.com
+    password: wcjbsxcsxwrfwhcu
+    host: smpt.gmail.com
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable:true
+          ssl:
+            protocols: TLSv1.2
+            trust: smtp.gmail.com
+
+
+
 
 key:
   access: 1cCFThHQ2hvK2rOym9SGAHCRwyh4CVCufUnA0NX7xuk=
