@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService {
         this.mailConfig = mailConfig;
         this.confirmationService = confirmationService;
         mailConfig.setDefaultEncoding("UTF-8");
-        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class,"/mail/*"));
+        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class,"/mail/"));
     }
 
     @Override

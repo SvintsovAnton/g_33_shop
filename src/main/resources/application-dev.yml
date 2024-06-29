@@ -18,7 +18,7 @@ spring:
   mail:
     username: shop777testmail789@gmail.com
     password: wcjbsxcsxwrfwhcu
-    host: smpt.gmail.com
+    host: smtp.gmail.com
     port: 587
     properties:
       mail:
@@ -26,7 +26,7 @@ spring:
         smtp:
           auth: true
           starttls:
-            enable:true
+            enable: true
           ssl:
             protocols: TLSv1.2
             trust: smtp.gmail.com
