@@ -11,24 +11,24 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "id")
-private Long id;
-   @Column(name = "username")
-   private String username;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable (name="user_role",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns =@JoinColumn(name="role_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "active")
@@ -102,7 +102,7 @@ private Long id;
 
     @Override
     public String toString() {
-        return String.format("User: id - %d, username -%s,roles - %s", id,username,roles ==null?"empty":roles);
+        return String.format("User: id - %d, username -%s,roles - %s", id, username, roles == null ? "empty" : roles);
     }
 
 /*    public static void main(String[] args) {

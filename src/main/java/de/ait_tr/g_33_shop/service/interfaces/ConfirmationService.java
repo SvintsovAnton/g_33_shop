@@ -13,7 +13,4 @@ public interface ConfirmationService {
     String confirmRegistration(String code);
 
 
-
-
-
 }

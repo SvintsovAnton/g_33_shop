@@ -16,7 +16,7 @@ import java.util.Map;
 public class AuthService {
     private UserServiceImpl userService;
     private TokenService tokenService;
-    private Map<String,String> refreshStorage;
+    private Map<String, String> refreshStorage;
     private BCryptPasswordEncoder encoder;
 
     public AuthService(UserServiceImpl userService, TokenService tokenService, BCryptPasswordEncoder encoder) {
@@ -28,14 +28,14 @@ public class AuthService {
 
     public TokenResponseDto login(User inboundUser) throws AuthException {
         String username = inboundUser.getUsername();
-        UserDetails foundUser=userService.loadUserByUsername(username);
-        if (encoder.matches(inboundUser.getPassword(), foundUser.getPassword())){
+        UserDetails foundUser = userService.loadUserByUsername(username);
+        if (encoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             String accessToken = tokenService.generateAccessToken(foundUser);
             String refreshToken = tokenService.generateRefreshToken(foundUser);
-            refreshStorage.put(username,refreshToken);
-            return new TokenResponseDto(accessToken,refreshToken);
+            refreshStorage.put(username, refreshToken);
+            return new TokenResponseDto(accessToken, refreshToken);
         }
-            throw new AuthException("Password is incorrect");
+        throw new AuthException("Password is incorrect");
     }
 
 
@@ -44,10 +44,10 @@ public class AuthService {
         String username = refreshClaims.getSubject();
         String foundRefreshToken = refreshStorage.get(username);
 
-        if (foundRefreshToken!=null&&foundRefreshToken.equals(inboundRefreshToken)){
-            UserDetails foundUser =userService.loadUserByUsername(username);
+        if (foundRefreshToken != null && foundRefreshToken.equals(inboundRefreshToken)) {
+            UserDetails foundUser = userService.loadUserByUsername(username);
             String accessToken = tokenService.generateAccessToken(foundUser);
-            return new TokenResponseDto(accessToken,null);
+            return new TokenResponseDto(accessToken, null);
         }
         throw new AuthException("Refresh Token is incorrect");
     }

@@ -17,6 +17,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleUser() {
         return repository.findByTitle("ROLE_USER").orElseThrow(
-                ()->new RuntimeException("Database doesn´t content ROLE_USER"));
+                () -> new RuntimeException("Database doesn´t content ROLE_USER"));
     }
 }

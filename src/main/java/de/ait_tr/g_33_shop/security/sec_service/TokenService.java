@@ -96,17 +96,17 @@ public class TokenService {
                 .getPayload();
     }
 
-public AuthInfo mapClaimsToAuthInfo(Claims claims){
+    public AuthInfo mapClaimsToAuthInfo(Claims claims) {
         String username = claims.getSubject();
-        List <LinkedHashMap<String,String>>roleList = (List<LinkedHashMap<String, String>>)claims.get("roles");
+        List<LinkedHashMap<String, String>> roleList = (List<LinkedHashMap<String, String>>) claims.get("roles");
         Set<Role> roles = new HashSet<>();
-        for (LinkedHashMap<String,String> roleEntry:roleList){
+        for (LinkedHashMap<String, String> roleEntry : roleList) {
             String roleTitle = roleEntry.get("authority");
             Role role = roleRepository.findByTitle(roleTitle).orElseThrow(
-                    ()->new RuntimeException("Datebase doesnt´t contain role")
+                    () -> new RuntimeException("Datebase doesnt´t contain role")
             );
             roles.add(role);
         }
-        return new AuthInfo(username,roles);
-}
+        return new AuthInfo(username, roles);
+    }
 }

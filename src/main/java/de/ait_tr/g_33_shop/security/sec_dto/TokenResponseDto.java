@@ -35,6 +35,6 @@ public class TokenResponseDto {
 
     @Override
     public String toString() {
-        return String.format("Token response: access token -%s, refresh token -%s",accessToken,refreshToken);
+        return String.format("Token response: access token -%s, refresh token -%s", accessToken, refreshToken);
     }
 }

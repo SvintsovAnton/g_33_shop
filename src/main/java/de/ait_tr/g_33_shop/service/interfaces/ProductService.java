@@ -18,4 +18,6 @@ public interface ProductService {
     BigDecimal getAllActiveProductsTotalPrice();
     BigDecimal getAllActiveProductsAveragePrice();
 
+    void attachImage(String imgUrl, String productTitle);
+
 }

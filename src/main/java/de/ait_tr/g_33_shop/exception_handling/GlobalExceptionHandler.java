@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-   @ExceptionHandler(ThirdTestException.class)
-   public ResponseEntity<Response> handleException(ThirdTestException e){
-       Response response = new Response(e.getMessage());
-       return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    @ExceptionHandler(ThirdTestException.class)
+    public ResponseEntity<Response> handleException(ThirdTestException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
-   }
+    }
 
     @ExceptionHandler(FourTestException.class)
-    public ResponseEntity<Response> handleException(FourTestException e){
+    public ResponseEntity<Response> handleException(FourTestException e) {
         Response response = new Response(e.getMessage());
-        return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ProductNotFindException.class)
-    public ResponseEntity<Response> handleException(ProductNotFindException e){
-       Response response = new Response(e.getMessage());
-       return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+    public ResponseEntity<Response> handleException(ProductNotFindException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Response> handleException(DataIntegrityViolationException e){
-       Response response = new Response(e.getMessage());
-       return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+    public ResponseEntity<Response> handleException(DataIntegrityViolationException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

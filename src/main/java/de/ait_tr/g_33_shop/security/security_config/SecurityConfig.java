@@ -27,25 +27,25 @@ public class SecurityConfig {
     }
 
     @Bean
-  public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(x-> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
-            httpBasic(AbstractHttpConfigurer::disable)
-            .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(x->x
-                    .requestMatchers(HttpMethod.GET,"/products/all").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/products").hasAnyRole("ADMIN","USER")
-                    .requestMatchers(HttpMethod.POST,"/products").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/auth/login","/auth/refresh").permitAll()
-                    .requestMatchers(HttpMethod.DELETE,"/products").hasRole("ADMIN")
-//                   .anyRequest().permitAll()
-            ).build();
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
+                httpBasic(AbstractHttpConfigurer::disable)
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(x -> x
+//                    .requestMatchers(HttpMethod.GET,"/products/all").permitAll()
+//                    .requestMatchers(HttpMethod.GET,"/products").hasAnyRole("ADMIN","USER")
+//                    .requestMatchers(HttpMethod.POST,"/products").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.POST,"/auth/login","/auth/refresh").permitAll()
+//                    .requestMatchers(HttpMethod.DELETE,"/products").hasRole("ADMIN")
+                                .anyRequest().permitAll()
+                ).build();
 
     }
 }

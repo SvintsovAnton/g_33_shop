@@ -8,33 +8,47 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name="product")
+@Table(name = "product")
 @Schema(description = "Class that describes Product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     @Schema(
             description = "Product unique identifier",
             example = "777",
             accessMode = Schema.AccessMode.READ_ONLY
     )
     private Long id;
-    @Column(name="title")
+    @Column(name = "title")
     @Schema(description = "Product title", example = "Banana")
     @NotNull(message = "Product title cannot be null")
     @NotBlank(message = "Product title cannot be empty")
-    @Pattern(regexp = "[A-Z][a-z]{2,}",message = "Product title should be at least 3 character length")
-    private String title;    @Column(name="price")
+    @Pattern(regexp = "[A-Z][a-z]{2,}", message = "Product title should be at least 3 character length")
+    private String title;
+    @Column(name = "price")
     @Schema(description = "Product price", example = "190.00")
-    @DecimalMin(value = "5.00",message = "Product price schould be greather or equal than 5")
+    @DecimalMin(value = "5.00", message = "Product price schould be greather or equal than 5")
     @DecimalMax(value = "100000.0",
             inclusive = false,
             message = "Product price should be lesser than 100000")
     private BigDecimal price;
-    @Column(name = "active") private boolean active;
 
+
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(name = "image")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -73,16 +87,16 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return active == product.active && Objects.equals(id, product.id) && Objects.equals(title, product.title) && Objects.equals(price, product.price);
+        return active == product.active && Objects.equals(id, product.id) && Objects.equals(title, product.title) && Objects.equals(price, product.price) && Objects.equals(image, product.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, active);
+        return Objects.hash(id, title, price, active, image);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: id - %d, title - %s, price - %s, active -%s",id,title,price,active?"yes":"no");
+        return String.format("Product: id - %d, title - %s, price - %s, active -%s", id, title, price, active ? "yes" : "no");
     }
 }

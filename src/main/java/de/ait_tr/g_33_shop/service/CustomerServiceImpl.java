@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto save(CustomerDto customer) {
-       Customer entity = mappingService.mapDtoInEntity(customer);
+        Customer entity = mappingService.mapDtoInEntity(customer);
         repository.save(entity);
         return mappingService.mapEntityToDto(entity);
 
@@ -37,9 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto getById(Long id) {
         Customer customer = repository.findById(id).orElse(null);
-        if (customer!=null&& customer.isActive()){
+        if (customer != null && customer.isActive()) {
             return mappingService.mapEntityToDto(customer);
-        } return null;
+        }
+        return null;
     }
 
     @Override
