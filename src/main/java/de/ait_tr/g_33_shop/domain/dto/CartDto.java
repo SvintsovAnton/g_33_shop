@@ -45,6 +45,6 @@ public class CartDto {
 
     @Override
     public String toString() {
-        return String.format("Cart: id -%d, containts %d products",id,productList==null?0:productList.size());
+        return String.format("Cart: id -%d, containts %d products", id, productList == null ? 0 : productList.size());
     }
 }

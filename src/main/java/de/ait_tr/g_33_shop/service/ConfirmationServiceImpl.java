@@ -5,7 +5,9 @@ import de.ait_tr.g_33_shop.domain.entity.User;
 import de.ait_tr.g_33_shop.repository.ConfirmationCodeRepository;
 import de.ait_tr.g_33_shop.repository.UserRepository;
 import de.ait_tr.g_33_shop.service.interfaces.ConfirmationService;
+import de.ait_tr.g_33_shop.service.interfaces.FileService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -38,18 +40,25 @@ public class ConfirmationServiceImpl implements ConfirmationService {
         Optional<ConfirmationCode> optionalConfirmationCode = repository.findByCode(code);
         if (optionalConfirmationCode.isPresent()) {
             ConfirmationCode confirmationCode = optionalConfirmationCode.get();
-            if (confirmationCode.getExpired().isAfter(LocalDateTime.now()))
-            {
+            if (confirmationCode.getExpired().isAfter(LocalDateTime.now())) {
                 User user = confirmationCode.getUser();
                 user.setActive(true);
                 userRepository.save(user);
-            return "User confirmed.";
+                return "User confirmed.";
+            } else {
+                return "User verification timed out. Please try again.";
+            }
+
         }
-            else {return "User verification timed out. Please try again.";}
+        return "Error in verification code. Please check the verification code and try again.";
 
-    } return "Error in verification code. Please check the verification code and try again.";
-
-}
+    }
 
 
+    public static class FileServiceImpl implements FileService {
+        @Override
+        public String upload(MultipartFile file, String productTitle) {
+            return null;
+        }
+    }
 }

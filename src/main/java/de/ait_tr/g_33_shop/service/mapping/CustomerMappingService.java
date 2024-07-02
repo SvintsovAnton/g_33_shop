@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMappingService {
-    @Mapping(target = "id",ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", constant = "true")
-
     Customer mapDtoInEntity(CustomerDto dto);
+
     CustomerDto mapEntityToDto(Customer entity);
 
 }

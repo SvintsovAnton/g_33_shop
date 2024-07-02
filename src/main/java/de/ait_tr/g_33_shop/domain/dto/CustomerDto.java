@@ -54,7 +54,7 @@ public class CustomerDto {
     }
 
     @Override
-    public String toString(){
-        return String.format("Customer: id - %d, name - %s, cart -%s",id,name,cart==null?"null":cart);
+    public String toString() {
+        return String.format("Customer: id - %d, name - %s, cart -%s", id, name, cart == null ? "null" : cart);
     }
 }

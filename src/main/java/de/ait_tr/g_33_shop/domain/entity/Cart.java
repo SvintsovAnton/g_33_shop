@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="cart")
+@Table(name = "cart")
 public class Cart {
 
     @Id
@@ -18,55 +18,55 @@ public class Cart {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name="customer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
 
-
     @ManyToMany
-    @JoinTable(name="cart_product",
-               joinColumns = @JoinColumn(name = "cart_id"),
+    @JoinTable(name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> productList;
 
-    public void addProduct(Product product){
-        if(product.isActive()){
+    public void addProduct(Product product) {
+        if (product.isActive()) {
             productList.add(product);
         }
     }
 
-    public List<Product> getAllActiveProducts (){
+    public List<Product> getAllActiveProducts() {
         return productList.stream().
                 filter(Product::isActive).
                 toList();
     }
 
-    public void removeProductById(Long id){
+    public void removeProductById(Long id) {
         Iterator<Product> iterator = productList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             if (iterator.next().getId().equals(id))
                 iterator.remove();
             break;
         }
     }
 
-    public void clear(){
+    public void clear() {
         productList.clear();
     }
 
-    public BigDecimal getActiveProductsTotalCost(){
+    public BigDecimal getActiveProductsTotalCost() {
         return productList.stream()
                 .filter(Product::isActive).
                 map(Product::getPrice).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
-    public BigDecimal getActiveProductsAverageCost(){
+    public BigDecimal getActiveProductsAverageCost() {
         int count = getAllActiveProducts().size();
-        if (count==0){
+        if (count == 0) {
             return BigDecimal.ZERO;
         }
         return getActiveProductsTotalCost().divide(new BigDecimal(count), RoundingMode.DOWN);
     }
+
     public Long getId() {
         return id;
     }
@@ -106,6 +106,6 @@ public class Cart {
 
     @Override
     public String toString() {
-        return String.format("Cart: id -%d, containts %d products",id,productList==null?0:productList.size());
+        return String.format("Cart: id -%d, containts %d products", id, productList == null ? 0 : productList.size());
     }
 }

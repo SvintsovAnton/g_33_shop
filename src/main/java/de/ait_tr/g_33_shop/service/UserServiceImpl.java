@@ -39,29 +39,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username).orElseThrow(
-                ()->new UsernameNotFoundException(String.format("User %s not found",username))
+                () -> new UsernameNotFoundException(String.format("User %s not found", username))
         );
     }
 
     @Override
     public void register(User user) {
 
-            user.setId(null);
-            user.setPassword(encoder.encode(user.getPassword()));
-            Role userRole = roleService.getRoleUser();
-            user.setRoles(Set.of(userRole));
-            user.setActive(false);
-            repository.save(user);
-            emailService.sendConfirmationEmail(user);
+        user.setId(null);
+        user.setPassword(encoder.encode(user.getPassword()));
+        Role userRole = roleService.getRoleUser();
+        user.setRoles(Set.of(userRole));
+        user.setActive(false);
+        repository.save(user);
+        emailService.sendConfirmationEmail(user);
 
-        }
-
-
-
+    }
 
 
     @Override
-    public String confirmRegistration(String confirmCode){
-return confirmationService.confirmRegistration(confirmCode);
+    public String confirmRegistration(String confirmCode) {
+        return confirmationService.confirmRegistration(confirmCode);
     }
 }

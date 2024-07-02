@@ -6,7 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Objects;
 
 @Entity
-@Table(name = "role") public class Role implements GrantedAuthority {
+@Table(name = "role")
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -45,7 +46,7 @@ import java.util.Objects;
 
     @Override
     public String toString() {
-        return String.format("Role: id - %d, title - %s",id,title);
+        return String.format("Role: id - %d, title - %s", id, title);
     }
 
     @Override

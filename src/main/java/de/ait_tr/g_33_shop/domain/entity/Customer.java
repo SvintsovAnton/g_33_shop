@@ -11,14 +11,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="is_active")
+    @Column(name = "is_active")
     private boolean active;
     @Column(name = "name")
     private String name;
 
-  @OneToOne(mappedBy = "customer")
-  private Cart cart;
-
+    @OneToOne(mappedBy = "customer")
+    private Cart cart;
 
 
     public Long getId() {
@@ -68,6 +67,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format("Customer: id - %d, active - %s, name - %s, cart -%s",id,active?"yes":"no",name,cart==null?"null":cart);
+        return String.format("Customer: id - %d, active - %s, name - %s, cart -%s", id, active ? "yes" : "no", name, cart == null ? "null" : cart);
     }
 }

@@ -28,20 +28,20 @@ public class EmailServiceImpl implements EmailService {
         this.mailConfig = mailConfig;
         this.confirmationService = confirmationService;
         mailConfig.setDefaultEncoding("UTF-8");
-        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class,"/mail/"));
+        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class, "/mail/"));
     }
 
     @Override
     public void sendConfirmationEmail(User user) {
         MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
         String emailText = generateEmailText(user);
 
         try {
             helper.setFrom("shop777testmail789@gmail.com");
             helper.setTo(user.getEmail());
             helper.setSubject("Registration");
-            helper.setText(emailText,true);
+            helper.setText(emailText, true);
 
             sender.send(message);
         } catch (MessagingException e) {
@@ -50,19 +50,19 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    private String generateEmailText(User user){
+    private String generateEmailText(User user) {
         try {
-            Template template=mailConfig.getTemplate("confirm_reg_mail.ftlh");      //объект шаблона письма в
+            Template template = mailConfig.getTemplate("confirm_reg_mail.ftlh");      //объект шаблона письма в
             String code = confirmationService.generateConfirmationCode(user);
             //localhost:8080/register?code=87rggrgrtbvr54rt4rtt43 ссылка для завершения регистрации
-            String url = "http://localhost:8080/register?code="+code;
+            String url = "http://localhost:8080/register?code=" + code;
 
             //ДЛя добавления данных в шаблон создаем мапy <name,link>
-            Map<String,Object> templateMap = new HashMap<>();
-            templateMap.put("name",user.getUsername());
-            templateMap.put("link",url);
+            Map<String, Object> templateMap = new HashMap<>();
+            templateMap.put("name", user.getUsername());
+            templateMap.put("link", url);
 
-            return FreeMarkerTemplateUtils.processTemplateIntoString(template,templateMap);
+            return FreeMarkerTemplateUtils.processTemplateIntoString(template, templateMap);
 
 
         } catch (Exception e) {

@@ -19,22 +19,23 @@ public class AuthController {
     public AuthController(AuthService service) {
         this.service = service;
     }
-@PostMapping("/login")
-public TokenResponseDto login(@RequestBody User user){
-    try {
-        return service.login(user);
-    } catch (AuthException e) {
-        throw new RuntimeException(e);
+
+    @PostMapping("/login")
+    public TokenResponseDto login(@RequestBody User user) {
+        try {
+            return service.login(user);
+        } catch (AuthException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
     @PostMapping("/refresh")
-    public TokenResponseDto getNewAccessToken(@RequestBody RefreshRequestDto request){
-    try {
-        return service.getNewAccessToken(request.getRefreshToken());
-    } catch (AuthException e) {
-        throw new RuntimeException(e);
+    public TokenResponseDto getNewAccessToken(@RequestBody RefreshRequestDto request) {
+        try {
+            return service.getNewAccessToken(request.getRefreshToken());
+        } catch (AuthException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
 }

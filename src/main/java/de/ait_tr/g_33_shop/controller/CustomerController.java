@@ -21,8 +21,8 @@ public class CustomerController {
 
     @PostMapping
     public CustomerDto save(@RequestBody
-                             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Instance of a Product")
-                                CustomerDto customer) {
+                            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Instance of a Product")
+                            CustomerDto customer) {
         return customerService.save(customer);
     }
 

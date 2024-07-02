@@ -19,14 +19,14 @@ public class RegistrationController {
     }
 
     @PostMapping
-   public Response register(@RequestBody User user){
-       userService.register(user);
+    public Response register(@RequestBody User user) {
+        userService.register(user);
         return new Response("Registration complete.Please check your email");
-   }
+    }
 
-   @PutMapping
-    public Response ConfirmRegistration(@RequestParam("code") String confirmCode){
-String messageForResponse = userService.confirmRegistration(confirmCode);
-return new Response(messageForResponse);
-   }
+    @PutMapping
+    public Response ConfirmRegistration(@RequestParam("code") String confirmCode) {
+        String messageForResponse = userService.confirmRegistration(confirmCode);
+        return new Response(messageForResponse);
+    }
 }

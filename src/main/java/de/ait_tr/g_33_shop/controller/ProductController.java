@@ -26,8 +26,6 @@ public class ProductController {
     }
 
 
-
-
 //CRUD Create (POST),Read (GET),Update (PUT) ,Delete (DELETE)
 // Create: POST ->localhost:8080/product
 //Доступ ко всем продуктам - все пользователи
@@ -35,76 +33,71 @@ public class ProductController {
     //сохранить продукт - админ
 
 
-
-
-
-@PostMapping
-    public ProductDto save(@RequestBody ProductDto product){
-    //обращаемся к сервесу для сохранения продукта
-    return service.save(product);
-}
+    @PostMapping
+    public ProductDto save(@RequestBody ProductDto product) {
+        //обращаемся к сервесу для сохранения продукта
+        return service.save(product);
+    }
 
 
 //READ GET ->localhost:8080/products?id=3
 
-   @Operation(summary = "Get product by ID", description = "Getting all products that exist in the database")
-   @GetMapping
+    @Operation(summary = "Get product by ID", description = "Getting all products that exist in the database")
+    @GetMapping
     public ProductDto getById(@RequestParam Long id) {
 
         // Обращаемся к сервису и запрашиваем продукт с ИД, который пришел на вход
-       return service.getById(id);
-        }
+        return service.getById(id);
+    }
 
 
+    @GetMapping("/all")
+    @Operation(summary = "Get all products", description = "Getting all products that exist in the database")
+    public List<ProductDto> getAll() {
+        return service.getAllActiveProducts();
+    }
 
-
-
-@GetMapping("/all")
-@Operation(summary = "Get all products", description = "Getting all products that exist in the database")
-    public List<ProductDto> getAll(){
-    return service.getAllActiveProducts();
-}
-
-     //UPDATE
+    //UPDATE
     @PutMapping
-    public ProductDto update(@RequestBody ProductDto product){
+    public ProductDto update(@RequestBody ProductDto product) {
         //обращаемся к серису для обновления продукта в БД
         return service.update(product);
     }
 
     //DELETE: DELETE ->localhost:8080?id=2
     @DeleteMapping
-    public void delete(@RequestParam(required = false) Long id,@RequestParam(required = false) String title){
-        if (id!=null){
+    public void delete(@RequestParam(required = false) Long id, @RequestParam(required = false) String title) {
+        if (id != null) {
             service.deleteById(id);
-        } else if (title!=null) {
+        } else if (title != null) {
             service.deleteByTitle(title);
         }
     }
 //обращаемся к сервису продукт id
 
     @PutMapping("/restore")
-    public void restore(@RequestParam Long id){
+    public void restore(@RequestParam Long id) {
         service.restoreById(id);
     }
+
     @GetMapping("/quantity")
-    public Long getProductsQuantity(){
+    public Long getProductsQuantity() {
         return service.getAllActiveProductsQuantity();
     }
 
-   @GetMapping("/total-price")
-   public BigDecimal getTotalPrice(){
+    @GetMapping("/total-price")
+    public BigDecimal getTotalPrice() {
         return service.getAllActiveProductsTotalPrice();
     }
 
     @GetMapping("/average-price")
-    public BigDecimal getAveragePrice(){
+    public BigDecimal getAveragePrice() {
         return service.getAllActiveProductsAveragePrice();
     }
 
-@ExceptionHandler(EmptyListException.class)
-    public Response handleEmptyListException(EmptyListException e){
+    @ExceptionHandler(EmptyListException.class)
+    public Response handleEmptyListException(EmptyListException e) {
         return new Response(e.getMessage());
-}
+    }
 
 }

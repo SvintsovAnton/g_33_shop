@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Mapper(componentModel = "spring")
 public interface ProductMappingService {
-    @Mapping(target = "id",ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", constant = "true")
     Product mapDtoToEntity(ProductDto dto);
+
     ProductDto mapEntityToDto(Product entity);
 
 //    public Product mapDtoToEntity(ProductDto dto) {

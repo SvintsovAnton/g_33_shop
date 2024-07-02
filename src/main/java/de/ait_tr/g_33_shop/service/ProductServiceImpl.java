@@ -8,6 +8,7 @@ import de.ait_tr.g_33_shop.repository.ProductRepository;
 import de.ait_tr.g_33_shop.service.interfaces.ProductService;
 import de.ait_tr.g_33_shop.service.mapping.ProductMappingService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
@@ -24,28 +25,28 @@ public class ProductServiceImpl implements ProductService {
         this.mappingService = mappingService;
     }
 
-//1.
+    //1.
 //
     @Override
     public ProductDto save(ProductDto dto) {
-Product entity = mappingService.mapDtoToEntity(dto);
-       if (repository.findAll().stream().anyMatch(element->element.getTitle().equals(entity.getTitle()))){
-           throw new DataIntegrityViolationException("Product with this title exist allready");
-       }
+        Product entity = mappingService.mapDtoToEntity(dto);
+        if (repository.findAll().stream().anyMatch(element -> element.getTitle().equals(entity.getTitle()))) {
+            throw new DataIntegrityViolationException("Product with this title exist allready");
+        }
         try {
-    repository.save(entity);
-}  catch (Exception e) {
-    throw new InvalidDataException(e.getMessage());
-}
+            repository.save(entity);
+        } catch (Exception e) {
+            throw new InvalidDataException(e.getMessage());
+        }
         return mappingService.mapEntityToDto(entity);
-}
+    }
 
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
-        List<ProductDto> productDtoList= repository.findAll()
+        List<ProductDto> productDtoList = repository.findAll()
                 .stream().filter(Product::isActive).map(mappingService::mapEntityToDto).toList();
-        if (productDtoList.isEmpty()){
+        if (productDtoList.isEmpty()) {
             throw new EmptyListException("List of active products is empty");
         }
         return productDtoList;
@@ -67,10 +68,10 @@ Product entity = mappingService.mapDtoToEntity(dto);
 
     @Override
     public void deleteById(Long id) {
-        if (repository.findById(id).orElse(null)==null){
+        if (repository.findById(id).orElse(null) == null) {
             throw new ProductNotFindException("This product isn't found und can not be removed");
         }
-repository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
@@ -97,6 +98,12 @@ repository.deleteById(id);
         return null;
     }
 
+    @Override
+    @Transactional
+    public void attachImage(String imgUrl, String productTitle) {
+        Product product = repository.findByTitle(productTitle).orElseThrow(() -> new ProductNotFindException("Product not find"));
+        product.setImage(imgUrl);
+    }
 
 
 }
